@@ -1,0 +1,6 @@
+.vscode
+node_modules
+logs
+.env
+.eslintrc.js
+.DS_Store
