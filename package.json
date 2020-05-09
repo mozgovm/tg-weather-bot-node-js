@@ -7,8 +7,11 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "author": "",
+  "author": "Mikhail Mozgov",
   "license": "ISC",
+  "engines": {
+    "node": "12.14.1"
+  },
   "dependencies": {
     "dotenv": "^8.2.0",
     "moment-timezone": "^0.5.28",
