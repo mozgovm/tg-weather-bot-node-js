@@ -1,8 +1,8 @@
 const moment = require('moment-timezone');
 const { createLogger, format, transports } = require('winston');
-const { combine, timestamp, label, printf } = format;
+const { combine, timestamp, printf } = format;
 
-const myFormat = printf(({ level, message, label, timestamp }) => {
+const myFormat = printf(({ level, message, timestamp }) => {
     return `${timestamp} [${level}]: ${message}`;
   });
 
@@ -12,23 +12,8 @@ const logConf = {
         myFormat
         ),
     transports : [
-        // new transports.File({
-        //     filename: './logs/test.log'
-        // }),
-        new (transports.File) ({ 
-            level: 'info',
-            filename: 'logs/access.log',
-            json: true
-        }),
-        new (transports.File) ({ 
-            level: 'error',
-            filename: 'logs/error.log',
-            json: true
-        })
+        new transports.Console()
     ]
 }
 
 module.exports = createLogger(logConf);
-
-// log.info('Test');
-// log.error('BUG');
