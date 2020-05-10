@@ -13,7 +13,7 @@ const userQueue = []; // id чатов пользователей, от кото
 
 const bot = new telegramBot(telegramBotToken);
 
-bot.setWebHook(`https://mmozgov-heroku-test-bot.herokuapp.com/weather_bot${telegramBotToken}`);
+bot.setWebHook(`https://tg-weather-bot-node-js.herokuapp.com/weather_bot${telegramBotToken}`);
 
 const app = new Koa();
 
