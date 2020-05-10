@@ -20,6 +20,7 @@ const app = new Koa();
 const router = new Router();
 router.post(`/weather_bot${telegramBotToken}`, ctx => {
     const { body } = ctx.request;
+    console.log(body);
     bot.processUpdate(body);
     ctx.status = 200;
 });
