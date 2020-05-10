@@ -1,5 +1,8 @@
 const telegramBot = require("node-telegram-bot-api");
 require('dotenv').config();
+const Koa = require('koa');
+const Router = require('koa-router');
+const bodyParser = require('koa-bodyparser');
 const log = require('./log');
 const { getForecastByCoords, forecastTypes: { now, today, tomorrow } } = require('./forecast');
 const { getLocationName, getCoordsByLocationName, getIndexOfLocation, moveLocation } = require('./geolocation');
@@ -8,8 +11,25 @@ const { user, dbConnect } = require('./db');
 const forecastTemplate = require('./response-renderer');
 const userQueue = []; // id чатов пользователей, от которых ожидается ввод локации
 
-const bot = new telegramBot(telegramBotToken, {
-    polling: true
+const bot = new telegramBot(telegramBotToken);
+
+bot.setWebHook(`https://mmozgov-heroku-test-bot.herokuapp.com/weather_bot${telegramBotToken}`);
+
+const app = new Koa();
+
+const router = new Router();
+router.post(`/weather_bot${telegramBotToken}`, ctx => {
+    const { body } = ctx.request;
+    bot.processUpdate(body);
+    ctx.status = 200;
+});
+
+app.use(bodyParser());
+app.use(router.routes());
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`App is listening on ${port}`);
 });
 
 bot.on('message', async msg => {
