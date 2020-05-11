@@ -20,7 +20,6 @@ const app = new Koa();
 const router = new Router();
 router.post(`/weather_bot${telegramBotToken}`, ctx => {
     const { body } = ctx.request;
-    console.log(body);
     bot.processUpdate(body);
     ctx.status = 200;
 });
@@ -134,7 +133,7 @@ bot.onText(/\/start/, async msg => {
     }
     
     
-    bot.sendMessage(msg.chat.id, 'Напишите название локаций, для которой хотите узнать погоду или отправьте текущее местоположение (достутпно только для мобильных устройств)', {
+    bot.sendMessage(msg.chat.id, 'Напишите название локации, для которой хотите узнать погоду или отправьте текущее местоположение (достутпно только для мобильных устройств)', {
         reply_markup: {
             keyboard: [
                 [{
@@ -213,7 +212,7 @@ bot.onText(/прогноз на завтра/i, async (msg) => {
 
 bot.onText(/изменить локацию/i, msg => {
     userQueue.push(msg.chat.id);
-    bot.sendMessage(msg.chat.id, 'Напишите название локаций, для которой хотите узнать погоду или отправьте текущее местоположение (достутпно только для мобильных устройств)', {
+    bot.sendMessage(msg.chat.id, 'Напишите название локации, для которой хотите узнать погоду или отправьте текущее местоположение (достутпно только для мобильных устройств)', {
         reply_markup: {
             keyboard: [
                 [{
