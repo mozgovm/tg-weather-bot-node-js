@@ -228,7 +228,7 @@ bot.onText(/изменить локацию/i, msg => {
         }
     });
 
-    log.info(`Waiting_for_new_location_from_user: ${dbUser.userName}, chat_id: ${msg.chat.id}`);
+    log.info(`Waiting for new location from user: ${msg.from.username}, chat_id: ${msg.chat.id}`);
     log.info(`User_queue: ${userQueue}`);
 }, userQueue);
 
