@@ -8,7 +8,7 @@ const { getForecastByCoords, forecastTypes: { now, today, tomorrow } } = require
 const { getLocationName, getCoordsByLocationName, getIndexOfLocation, moveLocation } = require('./geolocation');
 const { telegramBotToken } = require('./config/tokens');
 const { user, dbConnect } = require('./db');
-const forecastTemplate = require('./response-renderer');
+const { forecastTemplate } = require('./response-renderer');
 const userQueue = []; // id чатов пользователей, от которых ожидается ввод локации
 
 const bot = new telegramBot(telegramBotToken);

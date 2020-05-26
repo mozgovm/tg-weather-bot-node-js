@@ -3,10 +3,15 @@ const fetch = require('node-fetch');
 module.exports = { 
     getLocationName: async function  (lat, lon) {
         const url = `http://whatsthere.maps.sputnik.ru/point?lat=${lat}&lon=${lon}`;
-        console.log(url);
         const res = await fetch(url);
         const geodata = await res.json();
-        const locationName = geodata.result.address[0].features[0].properties.description;
+        const address = geodata.result.address;
+
+        if (!address) {
+            return;
+        }
+
+        const locationName = address[0].features[0].properties.title;
         return locationName;
     },
 

@@ -2,12 +2,6 @@ const { weatherAPIToken } = require('./config/tokens');
 const { getCoordsByLocationName } = require('./geolocation');
 const fetch = require('node-fetch');
 
-const forecastTypes = {
-    now: 'сейчас',
-    today: 'сегодня',
-    tomorrow: 'завтра'
-};
-
 class currentForecastShort {
     constructor(route) {
         this.temp = Math.round(route.temp_c);
@@ -18,7 +12,7 @@ class currentForecastShort {
         this.humidity = route.humidity;
         this.isDay = route.is_day;
     }
-};
+}
 
 class forecastShort {
     constructor(route) {
@@ -28,47 +22,39 @@ class forecastShort {
         this.humidity = route.day.avghumidity;
         this.date = route.date.split('-').reverse().join('.')
     }
-};
-
-function LocationSearchException(locationName) {
-    this.message = `По запросу \"${locationName}\" не найдено ни одной локации`;
-    this.code = 'NOLOC';
-};
-
-async function getForecastByCoords (lat, lon, forecastType) {
-    const url = `http://api.weatherapi.com/v1/forecast.json?key=${weatherAPIToken}&q=${lat},${lon}&days=2`;
-    const res = await fetch(url);
-    const forecast = await res.json();
-    return parseForecast(forecast, forecastType);
-};
-
-async function getForecastByLocationName (locationName) {
-    [ lon, lat ] = await getCoordsByLocationName(locationName).catch(e => console.error(e));
-    return getForecastByCoords (lat, lon);
-};
-
-function parseForecast(forecast, forecastType) {
-    let route;
-    switch (forecastType) {
-        case forecastTypes.now:
-            route = forecast.current;
-            return new currentForecastShort(route);
-        case forecastTypes.today:
-            route = forecast.forecast.forecastday[0];
-            return new forecastShort(route);
-        case forecastTypes.tomorrow:
-            route = forecast.forecast.forecastday[1];
-            return new forecastShort(route);
-        default:
-            console.error(`Нет прогноза для запроса \"${forecastType}\"`);
-            return;
-    };
-};
+}
 
 module.exports = {
-    getForecastByCoords: getForecastByCoords,
-    getForecastByLocationName: getForecastByLocationName,
-    parseForecast: parseForecast,
-    forecastTypes: forecastTypes
-};
+    forecastTypes: {
+        now: 'сейчас',
+        today: 'сегодня',
+        tomorrow: 'завтра'
+    },
 
+    parseForecast: (forecast, forecastType) => {
+        let route;
+        switch (forecastType) {
+            case module.exports.forecastTypes.now:
+                route = forecast.current;
+                return new currentForecastShort(route);
+            case module.exports.forecastTypes.today:
+                route = forecast.forecast.forecastday[0];
+                return new forecastShort(route);
+            case module.exports.forecastTypes.tomorrow:
+                route = forecast.forecast.forecastday[1];
+                return new forecastShort(route);
+        }
+    },
+
+    getForecastByCoords: async (lat, lon, forecastType) => {
+        const url = `http://api.weatherapi.com/v1/forecast.json?key=${weatherAPIToken}&q=${lat},${lon}&days=2`;
+        const res = await fetch(url);
+        const forecast = await res.json();
+        return module.exports.parseForecast(forecast, forecastType);
+    },
+
+    getForecastByLocationName: async (locationName) => {
+        [ lon, lat ] = await getCoordsByLocationName(locationName).catch(e => console.error(e));
+        return module.exports.getForecastByCoords (lat, lon);
+    }
+};

@@ -4,3 +4,4 @@ logs
 .env
 .eslintrc.js
 .DS_Store
+coverage
