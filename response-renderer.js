@@ -72,7 +72,7 @@ module.exports = {
 Давление: <b>${forecast.pressure} мм.рт.ст.</b>
 Влажность: <b>${forecast.humidity}%</b>`
     } else {
-        return `Погода на <b>${period}</b>, <b>${forecast.date}</b> для локации <b><i>${locationName}</i></b>:
+        return `Погода на <b>${period}</b>, <b>${forecast.date}</b> для локации <b><i>${locationName}!</i></b>:
 Температура: ${module.exports.renderTemp(forecast)}
 Осадки: ${module.exports.renderCloudness(forecast)}
 Ветер: ${module.exports.renderWind(forecast)}
