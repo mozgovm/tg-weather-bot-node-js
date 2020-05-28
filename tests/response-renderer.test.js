@@ -5,7 +5,7 @@ describe('renderer-tests', () => {
     test('should get daypart', () => {
         const parts = [
             { isDay: 1, partname: 'day' },
-            { isDay: 0, partname: 'night' }
+            { isDay: 1, partname: 'night' }
         ];
 
         parts.forEach(part => {
