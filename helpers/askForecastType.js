@@ -1,6 +1,6 @@
 const bot = require('../bot');
 
-module.exports = askForecastType = async (msg, locationName) => {
+module.exports = async (msg, locationName) => {
     const forecastTypeKeyboard = [
         [{
             text: 'Погода сейчас'

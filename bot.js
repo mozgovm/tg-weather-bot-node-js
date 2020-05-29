@@ -3,15 +3,16 @@ require('dotenv').config();
 const { telegramBotToken } = require('./config/tokens');
 const log = require('./log');
 const { getForecastByCoords, forecastTypes: { now, today, tomorrow } } = require('./forecast');
-const { getLocationName, getCoordsByLocationName, getIndexOfLocation, moveLocation } = require('./geolocation');
+const { getLocationName,  getIndexOfLocation, moveLocation } = require('./geolocation');
 const { user } = require('./db');
 const { forecastTemplate } = require('./response-renderer');
 const userQueue = []; // id чатов пользователей, от которых ожидается ввод локации
-const askForecastType = require('./helpers/askForecastType');
-const saveLocation = require('./helpers/saveLocation');
-
 
 const bot = new telegramBot(telegramBotToken);
+module.exports = bot;
+
+const askForecastType = require('./helpers/askForecastType');
+const saveLocation = require('./helpers/saveLocation');
 
 bot.setWebHook(`https://tg-weather-bot-node-js.herokuapp.com/weather_bot${telegramBotToken}`);
 
@@ -194,5 +195,3 @@ bot.on('location', async msg => {
         log.error(e.stack);
     });
   }, userQueue);
-
-  module.exports = bot;

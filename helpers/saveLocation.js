@@ -3,7 +3,7 @@ const { user } = require('../db');
 const log = require('../log');
 const { getCoordsByLocationName, getIndexOfLocation, moveLocation } = require('../geolocation');
 
-module.exports = saveLocation = async (msg) => {
+module.exports = async (msg) => {
     const receivedLocation = msg.text;
     const { coords, locationName }  = await getCoordsByLocationName(receivedLocation).catch(e => {
         log.error(e.message);
