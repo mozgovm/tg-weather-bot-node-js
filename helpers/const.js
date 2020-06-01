@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 var rootCas = require('ssl-root-cas/latest').create();
 
-rootCas.addFile(__dirname + '/config/ssl/intermediate.pem');
+rootCas.addFile(__dirname + '/../config/ssl/intermediate.pem');
 
 require('https').globalAgent.options.ca = rootCas;
 
@@ -15,7 +15,6 @@ async function getCodes () {
   const codes = JSON.parse(removeByteOrderMark(textCodes));
   return codes;
 }
-
 
 module.exports = getCodes;
 

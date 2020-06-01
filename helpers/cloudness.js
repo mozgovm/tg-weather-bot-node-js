@@ -11617,12 +11617,12 @@ const data = [
   }
 ];
 
-const supportedLanguages = [ 'Russian' ];
 function getLanguageIndex (language, arrLanguages) {
     return arrLanguages.findIndex(lang => lang.lang_name === language);
-};
+}
 
 function createCloudnessObject (data, langList) {
+  console.log('creating data');
     const result = {};
     data.forEach(codeObject => {
         const codePropertyName = codeObject.code;
@@ -11638,7 +11638,7 @@ function createCloudnessObject (data, langList) {
   });
 
     return result;
-};
+}
 
-module.exports = createCloudnessObject(data, supportedLanguages);
+module.exports = createCloudnessObject;
 
