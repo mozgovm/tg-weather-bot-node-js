@@ -1,6 +1,16 @@
-const cloudnessCodes = require('./config/weather_confs/cloudness-codes');
+// const cloudnessCodes = require('./config/weather_confs/cloudness-codes');
 const { north, south, west, east, north_west, north_east, south_west, south_east } = require('./config/weather_confs/wind-directions');
 const { forecastTypes: { now } } = require('./forecast');
+let cloudnessCodes;
+const getCodes = require('./helpers/const');
+const createCloudnessObject = require('./helpers/cloudness');
+const supportedLanguages = [ 'Russian' ];
+const myEmitter = require('./index');
+
+getCodes()
+.then(data => createCloudnessObject(data, supportedLanguages))
+.then(codes => cloudnessCodes = codes)
+.then(() => myEmitter.emit('startServer'))
 
 module.exports = {
     getDayPart: (isDay) => {
