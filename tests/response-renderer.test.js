@@ -14,7 +14,7 @@ describe('renderer-tests', () => {
         });
     });
 
-    test('should return text for cloudness', () => {
+    test.skip('should return text for cloudness', () => {
         const parsedForecast = {
             temp: 9,
             cloudness: 1000,
@@ -102,7 +102,7 @@ describe('renderer-tests', () => {
         });
     });
 
-    test('should return current forecast', () => {
+    test.skip('should return current forecast', () => {
 const EXPECTED_TEXT = `Текущая погода для локации <b><i>Москва</i></b>:
 Температура: <b>+9 °C</b>
 Осадки: <b>Переменная облачность</b>
@@ -124,7 +124,7 @@ const EXPECTED_TEXT = `Текущая погода для локации <b><i>�
         expect(forecastText).toBe(EXPECTED_TEXT);
     });
 
-    test('should return tomorrows forecst', () => {
+    test.skip('should return tomorrows forecst', () => {
 const EXPECTED_TEXT = `Погода на <b>завтра</b>, <b>25.06.2020</b> для локации <b><i>Санкт-Петербург</i></b>:
 Температура: <b>+7 °C</b>
 Осадки: <b>Местами дождь</b>
